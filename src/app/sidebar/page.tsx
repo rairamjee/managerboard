@@ -1,11 +1,25 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Home, User, Settings, ChartPie } from 'lucide-react';
 import Dashboard from './dashboard/page';
 import Report from './Report/page'; // Assuming you have a Report component
+import axios from 'axios';
+import { getUser } from '@/lib/action';
 
 function Sidebar() {
     const [activePage, setActivePage] = useState('Dashboard');
+
+    useEffect(() => {
+        const fetchuser = async () => {
+            // const user = await axios.get('/api/users');
+            const user = await getUser();
+            console.log(user)
+        }
+
+        fetchuser();
+        
+        
+    }, [])
 
     const renderContent = () => {
         switch (activePage) {
@@ -27,15 +41,15 @@ function Sidebar() {
                     <h3 className="mt-4 text-xl">SaleSkip!</h3>
                 </div>
                 <div className="px-4 my-6">
-                    <div 
-                        className={`flex items-center mb-4 cursor-pointer p-2 rounded-lg hover:bg-slate-700  hover:text-slate-50 ${activePage === 'Dashboard' ? 'text-slate-50 bg-slate-700' : 'text-slate-400'}`} 
+                    <div
+                        className={`flex items-center mb-4 cursor-pointer p-2 rounded-lg hover:bg-slate-700  hover:text-slate-50 ${activePage === 'Dashboard' ? 'text-slate-50 bg-slate-700' : 'text-slate-400'}`}
                         onClick={() => setActivePage('Dashboard')}
                     >
                         <Home className="h-4 w-4 mr-8" />
                         <span>Dashboard</span>
                     </div>
-                    <div 
-                        className={`flex items-center mb-4 cursor-pointer rounded-lg hover:bg-slate-700 p-2 hover:text-slate-50 ${activePage === 'Report' ? 'text-slate-50 bg-slate-700' : 'text-slate-400'}`} 
+                    <div
+                        className={`flex items-center mb-4 cursor-pointer rounded-lg hover:bg-slate-700 p-2 hover:text-slate-50 ${activePage === 'Report' ? 'text-slate-50 bg-slate-700' : 'text-slate-400'}`}
                         onClick={() => setActivePage('Report')}
                     >
                         <ChartPie className="h-4 w-4 mr-8" />
